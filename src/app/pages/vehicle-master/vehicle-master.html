@@ -104,9 +104,8 @@
               </tr>
             </thead>
 
-            <!-- Filas de ejemplo: reemplazar por *ngFor="let car of cars" al integrar -->
             <tbody class="divide-y divide-slate-100">
-              @for (item of vehicleList(); track $index) {
+              @for (item of pagedVehicles(); track item.carId) {
                 <tr class="bg-[#EFF4FF]">
                   <td class="border-l-4 border-[#2E5AAC] px-4 py-3">
                     <div class="flex items-center gap-3">
@@ -206,21 +205,28 @@
           class="flex flex-col gap-3 border-t border-slate-200 px-4 py-4 sm:flex-row sm:items-center sm:justify-between"
         >
           <p class="text-sm text-slate-500">
-            Mostrando <span class="font-medium text-slate-700">1-4</span> de
-            <span class="font-medium text-slate-700">4</span> vehículos
+            Mostrando
+            <span class="font-medium text-slate-700">{{ startIndex() }}-{{ endIndex() }}</span> de
+            <span class="font-medium text-slate-700">{{ vehicleList().length }}</span> vehículos
           </p>
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-3">
             <button
-              class="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-400 disabled:cursor-not-allowed"
+              class="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:text-slate-300 disabled:hover:bg-transparent"
               type="button"
-              disabled
+              (click)="goToPreviousPage()"
+              [disabled]="currentPage() === 1"
             >
               Anterior
             </button>
+            <span class="text-sm text-slate-500">
+              Página <span class="font-medium text-slate-700">{{ currentPage() }}</span> de
+              <span class="font-medium text-slate-700">{{ totalPages() }}</span>
+            </span>
             <button
-              class="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-400 disabled:cursor-not-allowed"
+              class="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:text-slate-300 disabled:hover:bg-transparent"
               type="button"
-              disabled
+              (click)="goToNextPage()"
+              [disabled]="currentPage() === totalPages()"
             >
               Siguiente
             </button>
