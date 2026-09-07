@@ -1,0 +1,102 @@
+estoy trabajando en una aplicación de alquiler de autos, es un proyecto de prueba para mi portafolio, tendremos los siguientes modulos:
+- Secure Login Page (Static Authentication)
+- Vehicle Management (CRUD)
+- Customer Management
+- Vehicle Booking Module
+- Auto-save Customer during Booking
+- Dashboard with Booking Statistics
+
+estamos usando tailwind css tienes que diseñar solo paginas html en su componente respectivo, no escribas codigo en angulas solo html y ya
+
+estas son las reglas de las paletas de colores de cada modulo
+
+Primario — Azul Marino "Trust Blue" (headers, sidebar, botones primarios, login)
+
+┌───────────┬─────────┬──────────────────────────────────┐
+│   Token   │   Hex   │               Uso                │
+├───────────┼─────────┼──────────────────────────────────┤
+│ brand-50  │ #EFF4FF │ fondos muy suaves, hover states  │
+├───────────┼─────────┼──────────────────────────────────┤
+│ brand-100 │ #DCE6FF │ badges, chips activos            │
+├───────────┼─────────┼──────────────────────────────────┤
+│ brand-500 │ #2E5AAC │ color base de marca              │
+├───────────┼─────────┼──────────────────────────────────┤
+│ brand-600 │ #24468A │ botones primarios, links         │
+├───────────┼─────────┼──────────────────────────────────┤
+│ brand-700 │ #1B3568 │ hover de botones                 │
+├───────────┼─────────┼──────────────────────────────────┤
+│ brand-900 │ #0F1F3D │ fondo del login / sidebar oscuro │
+└───────────┴─────────┴──────────────────────────────────┘
+
+Acento — Naranja "Drive Orange" (CTAs clave: "Reservar", "Confirmar booking")
+
+┌────────────┬─────────┬────────────────────────────────────────────┐
+│   Token    │   Hex   │                    Uso
+├────────────┼─────────┼────────────────────────────────────────────┤
+│ accent-400 │ #FF8A4C │ hover de CTA
+├────────────┼─────────┼────────────────────────────────────────────┤
+│ accent-500 │ #FF6B1A │ botón principal de acción (Reserv
+├────────────┼─────────┼────────────────────────────────────────────┤
+│ accent-600 │ #E5570A │ active/pressed
+└────────────┴─────────┴────────────────────────────────────────────┘
+
+Neutros — Slate (texto, bordes, cards) — usa directamente la escala slate de Tailwind (slate-50…slate-900), no hace falta redefinirla.
+
+Semánticos (estados de reserva/vehículo — clave en Booking y Dashboard)
+
+┌───────────────────────────┬─────────────┬─────────┐
+│          Estado           │    Token    │   Hex   │
+├───────────────────────────┼─────────────┼─────────┤
+│ Disponible / Confirmado   │ success-500 │ #16A34A │
+├───────────────────────────┼─────────────┼─────────┤
+│ Pendiente / En proceso    │ warning-500 │ #F59E0B │
+├───────────────────────────┼─────────────┼─────────┤
+│ No disponible / Cancelado │ danger-500  │ #DC2626 │
+├───────────────────────────┼─────────────┼─────────┤
+│ Informativo               │ info-500    │ #0EA5E9 │
+└───────────────────────────┴─────────────┴─────────┘
+
+Cómo mapear cada módulo
+
+- Login: fondo brand-900, tarjeta blanca/slate-50, botón accent-500.
+- Sidebar / navegación: brand-700 a brand-900 con texto blccent-500.
+- Vehicle Management / Customer Management (tablas y CRUD): fondo slate-50, cards blancas, botones "Editar" en brand-600, "Eliminar" en
+  danger-500.
+- Booking: chips de estado con los semánticos de arriba; botón "Reservar" en accent-500.
+- Dashboard: gráficas con brand-500, accent-500, success-5lores (buen contraste entre sí).
+
+Como tokens Tailwind v4 (@theme, ya que usan @tailwindcss/
+
+@theme {
+  --color-brand-50:  #EFF4FF;
+  --color-brand-100: #DCE6FF;
+  --color-brand-500: #2E5AAC;
+  --color-brand-600: #24468A;
+  --color-brand-700: #1B3568;
+  --color-brand-900: #0F1F3D;
+
+  --color-accent-400: #FF8A4C;
+  --color-accent-500: #FF6B1A;
+  --color-accent-600: #E5570A;
+
+  --color-success-500: #16A34A;
+  --color-warning-500: #F59E0B;
+  --color-danger-500:  #DC2626;
+  --color-info-500:    #0EA5E9;
+}
+
+ahora necesito que en el componente login hagas un formulario de login
+
+
+{
+  "CarId": 0,
+  "Brand": "string",
+  "Model": "string",
+  "Year": 0,
+  "Color": "string",
+  "DailyRate": 0,
+  "CarImage": "string",
+  "RegNo": "string"
+}
+
+en el componente maestro de vehiculos necesitamos construir un crud para este objeto - el diseño apegate a lo que hemos manejado junto con su paleta de colores 

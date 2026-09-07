@@ -1,0 +1,207 @@
+<main class="min-h-screen bg-[#EFF4FF] text-slate-900 lg:grid lg:grid-cols-[1.05fr_0.95fr]">
+  <aside
+    class="relative hidden overflow-hidden bg-[#0F1F3D] px-12 py-12 text-white lg:flex lg:flex-col lg:justify-between xl:px-20"
+  >
+    <div class="absolute -right-24 -top-28 h-80 w-80 rounded-full border border-[#FF6B1A]/20"></div>
+    <div
+      class="absolute -bottom-32 -left-20 h-96 w-96 rounded-full border border-[#2E5AAC]/25"
+    ></div>
+
+    <div class="relative z-10 flex items-center gap-3">
+      <span
+        class="flex h-11 w-11 items-center justify-center rounded-xl bg-[#FF6B1A] text-lg font-black text-[#0F1F3D]"
+        >V</span
+      >
+      <span class="text-xl font-semibold tracking-tight"
+        >Velo<span class="text-[#FF8A4C]">rent</span></span
+      >
+    </div>
+
+    <div class="relative z-10 max-w-xl pb-8">
+      <p class="mb-6 text-sm font-semibold uppercase tracking-[0.24em] text-[#FF8A4C]">
+        Alquiler sin complicaciones
+      </p>
+      <p class="max-w-lg text-5xl font-semibold leading-[1.08] tracking-tight xl:text-6xl">
+        Tu próximo viaje empieza aquí.
+      </p>
+      <p class="mt-6 max-w-md text-lg leading-8 text-slate-300">
+        Gestiona tu flota, clientes y reservas desde un solo lugar, con la claridad que tu negocio
+        necesita.
+      </p>
+
+      <div class="mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-white/10 pt-6">
+        <div>
+          <p class="text-2xl font-semibold">24/7</p>
+          <p class="mt-1 text-xs text-slate-400">Disponibilidad</p>
+        </div>
+        <div>
+          <p class="text-2xl font-semibold">+120</p>
+          <p class="mt-1 text-xs text-slate-400">Vehículos</p>
+        </div>
+        <div>
+          <p class="text-2xl font-semibold">4.9/5</p>
+          <p class="mt-1 text-xs text-slate-400">Valoración</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="relative z-10 text-xs text-slate-500">© 2024 Velorent. Movilidad hecha simple.</p>
+  </aside>
+
+  <section class="flex min-h-screen items-center justify-center px-6 py-10 sm:px-10">
+    <div class="w-full max-w-md">
+      <div class="mb-10 flex items-center gap-3 lg:hidden">
+        <span
+          class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FF6B1A] text-lg font-black text-[#0F1F3D]"
+          >V</span
+        >
+        <span class="text-xl font-semibold tracking-tight"
+          >Velo<span class="text-[#E5570A]">rent</span></span
+        >
+      </div>
+
+      <div class="mb-9">
+        <p class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[#E5570A]">
+          Panel de gestión
+        </p>
+        <h1 class="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
+          Bienvenido de nuevo
+        </h1>
+        <p class="mt-3 text-base leading-7 text-slate-500">
+          Inicia sesión para continuar gestionando tus reservas.
+        </p>
+      </div>
+
+      <form
+        class="space-y-5"
+        action="#"
+        method="post"
+      >
+        <div>
+          <label
+            class="mb-2 block text-sm font-medium text-slate-700"
+            for="email"
+            >Correo electrónico</label
+          >
+          <div class="relative">
+            <svg
+              class="pointer-events-none absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.25 6.75c0-.828.672-1.5 1.5-1.5h16.5c.828 0 1.5.672 1.5 1.5v10.5a1.5 1.5 0 0 1-1.5 1.5H3.75a1.5 1.5 0 0 1-1.5-1.5V6.75Z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m3 7 8.445 5.63a1.5 1.5 0 0 0 1.71 0L21.5 7"
+              />
+            </svg>
+            <input
+              class="block w-full rounded-lg border border-slate-300 bg-white py-3.5 pl-11 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#2E5AAC] focus:ring-4 focus:ring-[#2E5AAC]/10"
+              id="email"
+              [(ngModel)]="loginObj.userName"
+              name="userName"
+              type="email"
+              autocomplete="email"
+              placeholder="tu@empresa.com"
+              required
+            />
+          </div>
+        </div>
+
+        <div>
+          <div class="mb-2 flex items-center justify-between gap-4">
+            <label
+              class="block text-sm font-medium text-slate-700"
+              for="password"
+              >Contraseña</label
+            >
+            <a
+              class="text-sm font-medium text-[#24468A] transition hover:text-[#1B3568]"
+              href="#"
+              >¿La olvidaste?</a
+            >
+          </div>
+          <div class="relative">
+            <svg
+              class="pointer-events-none absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 9h10.5a1.5 1.5 0 0 0 1.5-1.5v-6a1.5 1.5 0 0 0-1.5-1.5H6.75a1.5 1.5 0 0 0-1.5 1.5v6a1.5 1.5 0 0 0 1.5 1.5Z"
+              />
+            </svg>
+            <input
+              class="block w-full rounded-lg border border-slate-300 bg-white py-3.5 pl-11 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#2E5AAC] focus:ring-4 focus:ring-[#2E5AAC]/10"
+              id="password"
+              [(ngModel)]="loginObj.password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+        </div>
+
+        <label
+          class="flex cursor-pointer items-center gap-3 text-sm text-slate-600"
+          for="remember"
+        >
+          <input
+            class="h-4 w-4 rounded border-slate-300 text-[#24468A] accent-[#24468A] focus:ring-[#2E5AAC]"
+            id="remember"
+            name="remember"
+            type="checkbox"
+          />
+          Mantener la sesión iniciada
+        </label>
+
+        <button
+          class="flex w-full items-center justify-center rounded-lg bg-[#FF6B1A] px-5 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#E5570A] focus:outline-none focus:ring-4 focus:ring-[#FF6B1A]/20"
+          type="button"
+          (click)="onLogin()"
+        >
+          Iniciar sesión
+        </button>
+      </form>
+
+      <div class="my-8 flex items-center justify-center gap-2 text-xs text-slate-400">
+        <span class="h-px flex-1 bg-slate-200"></span>
+        <svg
+          class="h-3.5 w-3.5 text-slate-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="1.5"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"
+          />
+        </svg>
+        <span>Acceso seguro</span>
+        <span class="h-px flex-1 bg-slate-200"></span>
+      </div>
+
+      <p class="text-center text-xs leading-5 text-slate-500">
+        Al continuar, aceptas nuestros términos de servicio y política de privacidad.
+      </p>
+    </div>
+  </section>
+</main>
