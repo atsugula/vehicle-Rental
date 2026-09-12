@@ -25,6 +25,8 @@ export class Dashboard implements OnInit {
     totalAmount: 0,
   });
 
+  isLoading = signal(true);
+
   bookingList = signal<Booking[]>([]);
 
   recentBookings = computed(() => this.bookingList().slice(0, 5));
@@ -44,11 +46,14 @@ export class Dashboard implements OnInit {
         if (response.result) {
           const data = Array.isArray(response.data) ? response.data[0] : response.data;
           this.dashboard.set(data as DashboardData);
+          this.isLoading.set(false);
         } else {
+          this.isLoading.set(false);
           this.swal.error('Error al cargar la información del panel', response.message);
         }
       },
       error: (error: any) => {
+        this.isLoading.set(false);
         console.error('Error fetching dashboard data:', error);
       },
     });

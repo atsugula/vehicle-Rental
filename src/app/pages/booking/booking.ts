@@ -25,6 +25,8 @@ export class Booking implements OnInit {
   bookingList = signal<BookingModel[]>([]);
   vehicleList = signal<Vehicle[]>([]);
 
+  isLoading = signal(true);
+
   private currentBookingId = 0;
 
   // Paginador de la tabla de reservas
@@ -81,11 +83,14 @@ export class Booking implements OnInit {
         if (response.result) {
           this.bookingList.set(response.data as BookingModel[]);
           this.currentPage.set(1);
+          this.isLoading.set(false);
         } else {
+          this.isLoading.set(false);
           this.swal.error('Error al cargar reservas', response.message);
         }
       },
       error: (error: any) => {
+        this.isLoading.set(false);
         console.error('Error fetching bookings:', error);
       },
     });
@@ -96,11 +101,13 @@ export class Booking implements OnInit {
       next: (response: IApiResponse) => {
         if (response.result) {
           this.vehicleList.set(response.data as Vehicle[]);
+          this.isLoading.set(false);
         } else {
           this.swal.error('Error al cargar vehículos', response.message);
         }
       },
       error: (error: any) => {
+        this.isLoading.set(false);
         console.error('Error fetching vehicles:', error);
       },
     });

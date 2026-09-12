@@ -1,12 +1,5 @@
 import { Routes } from '@angular/router';
 
-import { Login } from './pages/login/login';
-import { Layout } from './pages/layout/layout';
-import { Booking } from './pages/booking/booking';
-import { Dashboard } from './pages/dashboard/dashboard';
-import { VehicleMaster } from './pages/vehicle-master/vehicle-master';
-import { CustomerListing } from './pages/customer-listing/customer-listing';
-
 export const routes: Routes = [
   {
     path: '',
@@ -15,27 +8,27 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    component: Login,
+    loadComponent: () => import('./pages/login/login').then((m) => m.Login),
   },
   {
     path: '',
-    component: Layout,
+    loadComponent: () => import('./pages/layout/layout').then((m) => m.Layout),
     children: [
       {
         path: 'dashboard',
-        component: Dashboard,
+        loadComponent: () => import('./pages/dashboard/dashboard').then((m) => m.Dashboard),
       },
       {
         path: 'vehicles',
-        component: VehicleMaster,
+        loadComponent: () => import('./pages/vehicle-master/vehicle-master').then((m) => m.VehicleMaster),
       },
       {
         path: 'bookings',
-        component: Booking,
+        loadComponent: () => import('./pages/booking/booking').then((m) => m.Booking),
       },
       {
         path: 'customers',
-        component: CustomerListing,
+        loadComponent: () => import('./pages/customer-listing/customer-listing').then((m) => m.CustomerListing),
       },
     ],
   },

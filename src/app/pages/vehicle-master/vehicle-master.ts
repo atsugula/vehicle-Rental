@@ -17,6 +17,8 @@ export class VehicleMaster implements OnInit {
   vehicleObject: Vehicle = new Vehicle();
   vehicleList = signal<Vehicle[]>([]);
 
+  isLoading = signal(true);
+
   // Paginador de la tabla de vehículos
   pageSize = signal(4);
   currentPage = signal(1);
@@ -42,6 +44,33 @@ export class VehicleMaster implements OnInit {
 
   swal = inject(SwalService);
 
+  imgFallback =
+    'data:image/svg+xml;charset=UTF-8,' +
+    encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="140" viewBox="0 0 200 140">
+        <rect width="200" height="140" fill="#EFF4FF"/>
+        <g fill="none" stroke="#94A3B8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M35 96l13-34a8 8 0 0 1 7.4-5h89.2a8 8 0 0 1 7.4 5l13 34"/>
+          <circle cx="70" cy="104" r="10"/>
+          <circle cx="130" cy="104" r="10"/>
+          <path d="M60 104h80"/>
+        </g>
+        <text x="100" y="60" fill="#94A3B8" font-size="10" font-family="sans-serif" text-anchor="middle">Sin imagen</text>
+      </svg>`,
+    );
+
+  onImageError(event: Event) {
+    (event.target as HTMLImageElement).src = this.imgFallback;
+  }
+
+  get carImagePreview(): string {
+    const value = this.vehicleObject.carImage?.trim() ?? '';
+    if (!value) {
+      return this.imgFallback;
+    }
+    return value.startsWith('http') ? value : `https://${value}`;
+  }
+
   ngOnInit(): void {
     this.getAll();
   }
@@ -53,11 +82,14 @@ export class VehicleMaster implements OnInit {
         if (response.result) {
           this.vehicleList.set(response.data as Vehicle[]);
           this.currentPage.set(1);
+          this.isLoading.set(false);
         } else {
+          this.isLoading.set(false);
           this.swal.error('Error al cargar vehículos', response.message);
         }
       },
       error: (error: any) => {
+        this.isLoading.set(false);
         console.error('Error fetching vehicles:', error);
       },
     });

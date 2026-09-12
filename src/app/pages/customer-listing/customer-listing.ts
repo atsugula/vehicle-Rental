@@ -18,6 +18,8 @@ export class CustomerListing implements OnInit {
   customerForm: FormGroup;
   customerList = signal<Customer[]>([]);
 
+  isLoading = signal(true);
+
   private currentCustomerId = 0;
 
   // Paginador de la tabla de clientes
@@ -71,11 +73,14 @@ export class CustomerListing implements OnInit {
         if (response.result) {
           this.customerList.set(response.data as Customer[]);
           this.currentPage.set(1);
+          this.isLoading.set(false);
         } else {
+          this.isLoading.set(false);
           this.swal.error('Error al cargar clientes', response.message);
         }
       },
       error: (error: any) => {
+        this.isLoading.set(false);
         console.error('Error fetching customers:', error);
       },
     });
