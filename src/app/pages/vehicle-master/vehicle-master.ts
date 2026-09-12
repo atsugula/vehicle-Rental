@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { IApiResponse } from '../../model/common.model';
 import { Master } from '../../services/master';
+import { SwalService } from '../../services/swal.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   imports: [FormsModule],
@@ -38,6 +40,8 @@ export class VehicleMaster implements OnInit {
 
   master = inject(Master);
 
+  swal = inject(SwalService);
+
   ngOnInit(): void {
     this.getAll();
   }
@@ -50,7 +54,7 @@ export class VehicleMaster implements OnInit {
           this.vehicleList.set(response.data as Vehicle[]);
           this.currentPage.set(1);
         } else {
-          alert('Failed to fetch vehicles: ' + response.message);
+          this.swal.error('Error al cargar vehículos', response.message);
         }
       },
       error: (error: any) => {
@@ -74,16 +78,16 @@ export class VehicleMaster implements OnInit {
   onSave() {
     this.http
       .post<IApiResponse>(
-        'https://freeapi.gerasim.in/api/CarRentalApp/CreateNewCar',
+        `${environment.apiUrl}/CreateNewCar`,
         this.vehicleObject,
       )
       .subscribe({
         next: (response: IApiResponse) => {
           if (response.result) {
-            alert('Vehicle saved successfully!');
+            this.swal.success('Vehículo guardado', 'Los datos del vehículo se guardaron correctamente.');
             this.getAll();
           } else {
-            alert('Failed to save vehicle: ' + response.message);
+            this.swal.error('Error al guardar vehículo', response.message);
           }
         },
         error: (error: any) => {
@@ -97,23 +101,23 @@ export class VehicleMaster implements OnInit {
     if (vehicleToEdit) {
       this.vehicleObject = { ...vehicleToEdit };
     } else {
-      alert('Vehicle not found for editing.');
+      this.swal.error('Vehículo no encontrado', 'No fue posible localizar el vehículo para editar.');
     }
   }
 
   onUpdate() {
     this.http
       .put<IApiResponse>(
-        'https://freeapi.gerasim.in/api/CarRentalApp/UpdateCar',
+        `${environment.apiUrl}/UpdateCar`,
         this.vehicleObject,
       )
       .subscribe({
         next: (response: IApiResponse) => {
           if (response.result) {
-            alert('Vehicle updated successfully!');
+            this.swal.success('Vehículo actualizado', 'Los cambios se guardaron correctamente.');
             this.getAll();
           } else {
-            alert('Failed to update vehicle: ' + response.message);
+            this.swal.error('Error al actualizar vehículo', response.message);
           }
         },
         error: (error: any) => {
@@ -123,27 +127,30 @@ export class VehicleMaster implements OnInit {
   }
 
   onDestroy(carId: number) {
-    const confirmDelete = confirm('Are you sure you want to delete this vehicle?');
-    if (!confirmDelete) {
-      return; // User canceled the deletion
-    }
+    this.swal
+      .confirm('Eliminar vehículo', '¿Estás seguro de eliminar este vehículo?')
+      .then((result) => {
+        if (!result.isConfirmed) {
+          return;
+        }
 
-    this.http
-      .delete<IApiResponse>(
-        `https://freeapi.gerasim.in/api/CarRentalApp/DeleteCarbyCarId?carid=${carId}`,
-      )
-      .subscribe({
-        next: (response: IApiResponse) => {
-          if (response.result) {
-            alert('Vehicle deleted successfully!');
-            this.getAll();
-          } else {
-            alert('Failed to delete vehicle: ' + response.message);
-          }
-        },
-        error: (error: any) => {
-          console.error('Error deleting vehicle:', error);
-        },
+        this.http
+          .delete<IApiResponse>(
+            `${environment.apiUrl}/DeleteCarbyCarId?carid=${carId}`,
+          )
+          .subscribe({
+            next: (response: IApiResponse) => {
+              if (response.result) {
+                this.swal.success('Vehículo eliminado', 'El vehículo fue eliminado correctamente.');
+                this.getAll();
+              } else {
+                this.swal.error('Error al eliminar vehículo', response.message);
+              }
+            },
+            error: (error: any) => {
+              console.error('Error deleting vehicle:', error);
+            },
+          });
       });
   }
 

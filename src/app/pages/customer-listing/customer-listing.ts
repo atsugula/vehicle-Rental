@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Customer } from '../../model/customer.model';
 import { IApiResponse } from '../../model/common.model';
+import { SwalService } from '../../services/swal.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   imports: [ReactiveFormsModule],
@@ -11,7 +13,7 @@ import { IApiResponse } from '../../model/common.model';
   templateUrl: './customer-listing.html',
 })
 export class CustomerListing implements OnInit {
-  apiUrl = 'https://freeapi.gerasim.in/api/CarRentalApp';
+  apiUrl = environment.apiUrl;
 
   customerForm: FormGroup;
   customerList = signal<Customer[]>([]);
@@ -47,6 +49,8 @@ export class CustomerListing implements OnInit {
   http = inject(HttpClient);
   fb = inject(FormBuilder);
 
+  swal = inject(SwalService);
+
   constructor() {
     this.customerForm = this.fb.group({
       customerName: [''],
@@ -68,7 +72,7 @@ export class CustomerListing implements OnInit {
           this.customerList.set(response.data as Customer[]);
           this.currentPage.set(1);
         } else {
-          alert('Failed to fetch customers: ' + response.message);
+          this.swal.error('Error al cargar clientes', response.message);
         }
       },
       error: (error: any) => {
@@ -93,7 +97,7 @@ export class CustomerListing implements OnInit {
     const customer = this.customerObject;
     const mobileNo = this.sanitizeMobileNo(customer.mobileNo);
     if (mobileNo.length !== 10) {
-      alert('Mobile number must be exactly 10 digits.');
+      this.swal.warning('Número de teléfono inválido', 'El número de móvil debe tener exactamente 10 dígitos.');
       return;
     }
 
@@ -107,10 +111,10 @@ export class CustomerListing implements OnInit {
       .subscribe({
         next: (response: IApiResponse) => {
           if (response.result) {
-            alert('Customer saved successfully!');
+            this.swal.success('Cliente guardado', 'El cliente se registró correctamente.');
             this.getAllCustomers();
           } else {
-            alert('Failed to save customer: ' + response.message);
+            this.swal.error('Error al guardar cliente', response.message);
           }
         },
         error: (error: any) => {
@@ -130,7 +134,7 @@ export class CustomerListing implements OnInit {
         email: customerToEdit.email,
       });
     } else {
-      alert('Customer not found for editing.');
+      this.swal.error('Cliente no encontrado', 'No fue posible localizar al cliente para editar.');
     }
   }
 
@@ -138,7 +142,7 @@ export class CustomerListing implements OnInit {
     const customer = this.customerObject;
     const mobileNo = this.sanitizeMobileNo(customer.mobileNo);
     if (mobileNo.length !== 10) {
-      alert('Mobile number must be exactly 10 digits.');
+      this.swal.warning('Número de teléfono inválido', 'El número de móvil debe tener exactamente 10 dígitos.');
       return;
     }
 
@@ -153,10 +157,10 @@ export class CustomerListing implements OnInit {
       .subscribe({
         next: (response: IApiResponse) => {
           if (response.result) {
-            alert('Customer updated successfully!');
+            this.swal.success('Cliente actualizado', 'Los cambios se guardaron correctamente.');
             this.getAllCustomers();
           } else {
-            alert('Failed to update customer: ' + response.message);
+            this.swal.error('Error al actualizar cliente', response.message);
           }
         },
         error: (error: any) => {
@@ -166,25 +170,28 @@ export class CustomerListing implements OnInit {
   }
 
   onDestroy(customerId: number) {
-    const confirmDelete = confirm('Are you sure you want to delete this customer?');
-    if (!confirmDelete) {
-      return;
-    }
+    this.swal
+      .confirm('Eliminar cliente', '¿Estás seguro de eliminar este cliente?')
+      .then((result) => {
+        if (!result.isConfirmed) {
+          return;
+        }
 
-    this.http
-      .delete<IApiResponse>(`${this.apiUrl}/DeletCustomerById?id=${customerId}`)
-      .subscribe({
-        next: (response: IApiResponse) => {
-          if (response.result) {
-            alert('Customer deleted successfully!');
-            this.getAllCustomers();
-          } else {
-            alert('Failed to delete customer: ' + response.message);
-          }
-        },
-        error: (error: any) => {
-          console.error('Error deleting customer:', error);
-        },
+        this.http
+          .delete<IApiResponse>(`${this.apiUrl}/DeletCustomerById?id=${customerId}`)
+          .subscribe({
+            next: (response: IApiResponse) => {
+              if (response.result) {
+                this.swal.success('Cliente eliminado', 'El cliente fue eliminado correctamente.');
+                this.getAllCustomers();
+              } else {
+                this.swal.error('Error al eliminar cliente', response.message);
+              }
+            },
+            error: (error: any) => {
+              console.error('Error deleting customer:', error);
+            },
+          });
       });
   }
 

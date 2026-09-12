@@ -6,6 +6,8 @@ import { Booking as BookingModel } from '../../model/booking.model';
 import { Vehicle } from '../../model/vehicle.model';
 import { IApiResponse } from '../../model/common.model';
 import { Master } from '../../services/master';
+import { SwalService } from '../../services/swal.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   imports: [ReactiveFormsModule, FormsModule, DatePipe],
@@ -14,8 +16,10 @@ import { Master } from '../../services/master';
   templateUrl: './booking.html',
 })
 export class Booking implements OnInit {
-  apiUrl = 'https://freeapi.gerasim.in/api/CarRentalApp';
+  apiUrl = environment.apiUrl;
   master = inject(Master);
+
+  swal = inject(SwalService);
 
   bookingForm: FormGroup;
   bookingList = signal<BookingModel[]>([]);
@@ -78,7 +82,7 @@ export class Booking implements OnInit {
           this.bookingList.set(response.data as BookingModel[]);
           this.currentPage.set(1);
         } else {
-          alert('Failed to fetch bookings: ' + response.message);
+          this.swal.error('Error al cargar reservas', response.message);
         }
       },
       error: (error: any) => {
@@ -93,7 +97,7 @@ export class Booking implements OnInit {
         if (response.result) {
           this.vehicleList.set(response.data as Vehicle[]);
         } else {
-          alert('Failed to fetch vehicles: ' + response.message);
+          this.swal.error('Error al cargar vehículos', response.message);
         }
       },
       error: (error: any) => {
@@ -118,7 +122,7 @@ export class Booking implements OnInit {
     const booking = this.bookingObject;
     const mobileNo = (booking.mobileNo || '').replace(/\D/g, '');
     if (mobileNo.length !== 10) {
-      alert('Mobile number must be exactly 10 digits.');
+      this.swal.warning('Número de teléfono inválido', 'El número de móvil debe tener exactamente 10 dígitos.');
       return;
     }
 
@@ -137,10 +141,10 @@ export class Booking implements OnInit {
       .subscribe({
         next: (response: IApiResponse) => {
           if (response.result) {
-            alert('Booking saved successfully!');
+            this.swal.success('Reserva guardada', 'La reserva se registró correctamente.');
             this.getAllBookings();
           } else {
-            alert('Failed to save booking: ' + response.message);
+            this.swal.error('Error al guardar reserva', response.message);
           }
         },
         error: (error: any) => {
@@ -168,7 +172,7 @@ export class Booking implements OnInit {
               totalBillAmount: booking.totalBillAmount,
             });
           } else {
-            alert('Failed to load booking: ' + response.message);
+            this.swal.error('Error al cargar reserva', response.message);
           }
         },
         error: (error: any) => {
@@ -183,29 +187,32 @@ export class Booking implements OnInit {
         booking.bookingId === this.currentBookingId ? this.bookingObject : booking,
       ),
     );
-    alert('Booking updated successfully!');
+    this.swal.success('Reserva actualizada', 'La reserva se actualizó correctamente.');
     this.clearForm();
   }
 
   onDestroy(bookingId: number) {
-    const confirmDelete = confirm('Are you sure you want to delete this booking?');
-    if (!confirmDelete) {
-      return;
-    }
-
-    this.http.delete<IApiResponse>(`${this.apiUrl}/DeletBookingById?id=${bookingId}`).subscribe({
-      next: (response: IApiResponse) => {
-        if (response.result) {
-          alert('Booking deleted successfully!');
-          this.getAllBookings();
-        } else {
-          alert('Failed to delete booking: ' + response.message);
+    this.swal
+      .confirm('Eliminar reserva', '¿Estás seguro de eliminar esta reserva?')
+      .then((result) => {
+        if (!result.isConfirmed) {
+          return;
         }
-      },
-      error: (error: any) => {
-        console.error('Error deleting booking:', error);
-      },
-    });
+
+        this.http.delete<IApiResponse>(`${this.apiUrl}/DeletBookingById?id=${bookingId}`).subscribe({
+          next: (response: IApiResponse) => {
+            if (response.result) {
+              this.swal.success('Reserva eliminada', 'La reserva fue eliminada correctamente.');
+              this.getAllBookings();
+            } else {
+              this.swal.error('Error al eliminar reserva', response.message);
+            }
+          },
+          error: (error: any) => {
+            console.error('Error deleting booking:', error);
+          },
+        });
+      });
   }
 
   clearForm() {

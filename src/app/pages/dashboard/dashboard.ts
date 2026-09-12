@@ -4,6 +4,8 @@ import { DecimalPipe } from '@angular/common';
 import { DashboardData } from '../../model/dashboard.model';
 import { IApiResponse } from '../../model/common.model';
 import { Booking } from '../../model/booking.model';
+import { SwalService } from '../../services/swal.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   imports: [DecimalPipe],
@@ -12,7 +14,7 @@ import { Booking } from '../../model/booking.model';
   templateUrl: './dashboard.html',
 })
 export class Dashboard implements OnInit {
-  apiUrl = 'https://freeapi.gerasim.in/api/CarRentalApp';
+  apiUrl = environment.apiUrl;
 
   dashboard = signal<DashboardData>({
     totalCars: 0,
@@ -29,6 +31,8 @@ export class Dashboard implements OnInit {
 
   http = inject(HttpClient);
 
+  swal = inject(SwalService);
+
   ngOnInit(): void {
     this.getDashboardData();
     this.getAllBookings();
@@ -41,7 +45,7 @@ export class Dashboard implements OnInit {
           const data = Array.isArray(response.data) ? response.data[0] : response.data;
           this.dashboard.set(data as DashboardData);
         } else {
-          alert('Failed to fetch dashboard data: ' + response.message);
+          this.swal.error('Error al cargar la información del panel', response.message);
         }
       },
       error: (error: any) => {
@@ -56,7 +60,7 @@ export class Dashboard implements OnInit {
         if (response.result) {
           this.bookingList.set(response.data as Booking[]);
         } else {
-          alert('Failed to fetch bookings: ' + response.message);
+          this.swal.error('Error al cargar reservas', response.message);
         }
       },
       error: (error: any) => {

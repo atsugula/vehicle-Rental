@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SwalService } from '../../services/swal.service';
 
 interface LoginObj {
   userName: string;
@@ -27,6 +28,8 @@ export class Login {
 
   router = inject(Router);
 
+  swal = inject(SwalService);
+
   constructor() {}
 
   onLogin() {
@@ -36,7 +39,7 @@ export class Login {
         localStorage.setItem('currentUser', user.userName);
         this.router.navigate(['/dashboard']);
       } else {
-        alert('Invalid credentials');
+        this.swal.error('Credenciales inválidas', 'El usuario o la contraseña no son correctos.');
       }
     }
   }
