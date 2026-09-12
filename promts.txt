@@ -100,3 +100,17 @@ ahora necesito que en el componente login hagas un formulario de login
 }
 
 en el componente maestro de vehiculos necesitamos construir un crud para este objeto - el diseño apegate a lo que hemos manejado junto con su paleta de colores 
+
+{
+  "CustomerName": "string",
+  "CustomerCity": "string",
+  "MobileNo": "stringstri",
+  "Email": "string",
+  "BookingId": 0,
+  "CarId": 0,
+  "BookingDate": "2026-09-12T02:11:56.714Z",
+  "Discount": 0,
+  "TotalBillAmount": 0
+}
+
+en el componente de booking necesitamos construir un crud para este objeto, solo modifica el html - el diseño apegate a lo que hemos manejado junto con su paleta de colores
