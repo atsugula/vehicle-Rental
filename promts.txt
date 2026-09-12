@@ -114,3 +114,13 @@ en el componente maestro de vehiculos necesitamos construir un crud para este ob
 }
 
 en el componente de booking necesitamos construir un crud para este objeto, solo modifica el html - el diseño apegate a lo que hemos manejado junto con su paleta de colores
+
+{
+  "CustomerId": 0,
+  "CustomerName": "string",
+  "CustomerCity": "string",
+  "MobileNo": "stringstri",
+  "Email": "string"
+}
+
+en el componente de customer necesitamos construir un crud para este objeto, solo modifica el html - el diseño apegate a lo que hemos manejado junto con su paleta de colores, ya esta creado el modelo con la estructura de customer, se llama customer.model.ts
