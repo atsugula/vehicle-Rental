@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Booking as BookingModel } from '../../model/booking.model';
 import { Vehicle } from '../../model/vehicle.model';
 import { IApiResponse } from '../../model/common.model';
+import { Master } from '../../services/master';
 
 @Component({
   imports: [ReactiveFormsModule, FormsModule, DatePipe],
@@ -14,6 +15,7 @@ import { IApiResponse } from '../../model/common.model';
 })
 export class Booking implements OnInit {
   apiUrl = 'https://freeapi.gerasim.in/api/CarRentalApp';
+  master = inject(Master);
 
   bookingForm: FormGroup;
   bookingList = signal<BookingModel[]>([]);
@@ -86,7 +88,7 @@ export class Booking implements OnInit {
   }
 
   getAllCars() {
-    this.http.get<IApiResponse>(`${this.apiUrl}/GetCars`).subscribe({
+    this.master.getAllVehicles().subscribe({
       next: (response: IApiResponse) => {
         if (response.result) {
           this.vehicleList.set(response.data as Vehicle[]);
@@ -191,21 +193,19 @@ export class Booking implements OnInit {
       return;
     }
 
-    this.http
-      .delete<IApiResponse>(`${this.apiUrl}/DeletBookingById?id=${bookingId}`)
-      .subscribe({
-        next: (response: IApiResponse) => {
-          if (response.result) {
-            alert('Booking deleted successfully!');
-            this.getAllBookings();
-          } else {
-            alert('Failed to delete booking: ' + response.message);
-          }
-        },
-        error: (error: any) => {
-          console.error('Error deleting booking:', error);
-        },
-      });
+    this.http.delete<IApiResponse>(`${this.apiUrl}/DeletBookingById?id=${bookingId}`).subscribe({
+      next: (response: IApiResponse) => {
+        if (response.result) {
+          alert('Booking deleted successfully!');
+          this.getAllBookings();
+        } else {
+          alert('Failed to delete booking: ' + response.message);
+        }
+      },
+      error: (error: any) => {
+        console.error('Error deleting booking:', error);
+      },
+    });
   }
 
   clearForm() {

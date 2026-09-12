@@ -6,7 +6,11 @@ import { IApiResponse } from '../model/common.model';
 export class Master {
   http = inject(HttpClient);
 
-  getAll() {
+  getAllVehicles() {
     return this.http.get<IApiResponse>('https://freeapi.gerasim.in/api/CarRentalApp/GetCars');
+  }
+
+  getAllCustomers() {
+    return this.http.get<IApiResponse>('https://freeapi.gerasim.in/api/CarRentalApp/GetCustomers');
   }
 }

@@ -44,7 +44,7 @@ export class VehicleMaster implements OnInit {
 
   getAll() {
     this.clearForm();
-    this.master.getAll().subscribe({
+    this.master.getAllVehicles().subscribe({
       next: (response: IApiResponse) => {
         if (response.result) {
           this.vehicleList.set(response.data as Vehicle[]);
