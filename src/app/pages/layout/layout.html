@@ -17,9 +17,16 @@
         aria-label="Navegación principal"
       >
         <a
-          class="flex items-center gap-2 rounded-lg bg-[#DCE6FF]/60 px-3 py-2 text-sm font-semibold text-[#1B3568] transition"
+          #dash="routerLinkActive"
+          class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition"
           routerLink="/dashboard"
-          aria-current="page"
+          routerLinkActive=""
+          [attr.aria-current]="dash.isActive ? 'page' : null"
+          [class]="
+            dash.isActive
+              ? 'bg-[#DCE6FF]/60 font-semibold text-[#1B3568]'
+              : 'font-medium text-slate-600 hover:bg-[#EFF4FF] hover:text-[#24468A]'
+          "
         >
           <svg
             class="h-5 w-5"
@@ -38,8 +45,16 @@
           Dashboard
         </a>
         <a
-          class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-[#EFF4FF] hover:text-[#24468A]"
+          #vehicles="routerLinkActive"
+          class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition"
           routerLink="/vehicles"
+          routerLinkActive=""
+          [attr.aria-current]="vehicles.isActive ? 'page' : null"
+          [class]="
+            vehicles.isActive
+              ? 'bg-[#DCE6FF]/60 font-semibold text-[#1B3568]'
+              : 'font-medium text-slate-600 hover:bg-[#EFF4FF] hover:text-[#24468A]'
+          "
         >
           <svg
             class="h-5 w-5"
@@ -58,8 +73,16 @@
           Vehículos
         </a>
         <a
-          class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-[#EFF4FF] hover:text-[#24468A]"
+          #bookings="routerLinkActive"
+          class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition"
           routerLink="/bookings"
+          routerLinkActive=""
+          [attr.aria-current]="bookings.isActive ? 'page' : null"
+          [class]="
+            bookings.isActive
+              ? 'bg-[#DCE6FF]/60 font-semibold text-[#1B3568]'
+              : 'font-medium text-slate-600 hover:bg-[#EFF4FF] hover:text-[#24468A]'
+          "
         >
           <svg
             class="h-5 w-5"
@@ -78,8 +101,16 @@
           Reservas
         </a>
         <a
-          class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-[#EFF4FF] hover:text-[#24468A]"
+          #customers="routerLinkActive"
+          class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition"
           routerLink="/customers"
+          routerLinkActive=""
+          [attr.aria-current]="customers.isActive ? 'page' : null"
+          [class]="
+            customers.isActive
+              ? 'bg-[#DCE6FF]/60 font-semibold text-[#1B3568]'
+              : 'font-medium text-slate-600 hover:bg-[#EFF4FF] hover:text-[#24468A]'
+          "
         >
           <svg
             class="h-5 w-5"
@@ -145,24 +176,55 @@
       aria-label="Navegación principal"
     >
       <a
-        class="flex shrink-0 items-center gap-1.5 rounded-lg bg-[#DCE6FF]/60 px-3 py-1.5 text-xs font-semibold text-[#1B3568]"
-        href="/dashboard"
-        aria-current="page"
+        #dashMobile="routerLinkActive"
+        class="flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs transition"
+        routerLink="/dashboard"
+        routerLinkActive=""
+        [attr.aria-current]="dashMobile.isActive ? 'page' : null"
+        [class]="
+          dashMobile.isActive
+            ? 'bg-[#DCE6FF]/60 font-semibold text-[#1B3568]'
+            : 'font-medium text-slate-600'
+        "
         >Dashboard</a
       >
       <a
-        class="flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-600"
-        href="/vehicles"
+        #vehiclesMobile="routerLinkActive"
+        class="flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs transition"
+        routerLink="/vehicles"
+        routerLinkActive=""
+        [attr.aria-current]="vehiclesMobile.isActive ? 'page' : null"
+        [class]="
+          vehiclesMobile.isActive
+            ? 'bg-[#DCE6FF]/60 font-semibold text-[#1B3568]'
+            : 'font-medium text-slate-600'
+        "
         >Vehículos</a
       >
       <a
-        class="flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-600"
-        href="/bookings"
+        #bookingsMobile="routerLinkActive"
+        class="flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs transition"
+        routerLink="/bookings"
+        routerLinkActive=""
+        [attr.aria-current]="bookingsMobile.isActive ? 'page' : null"
+        [class]="
+          bookingsMobile.isActive
+            ? 'bg-[#DCE6FF]/60 font-semibold text-[#1B3568]'
+            : 'font-medium text-slate-600'
+        "
         >Reservas</a
       >
       <a
-        class="flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-600"
-        href="/customers"
+        #customersMobile="routerLinkActive"
+        class="flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs transition"
+        routerLink="/customers"
+        routerLinkActive=""
+        [attr.aria-current]="customersMobile.isActive ? 'page' : null"
+        [class]="
+          customersMobile.isActive
+            ? 'bg-[#DCE6FF]/60 font-semibold text-[#1B3568]'
+            : 'font-medium text-slate-600'
+        "
         >Clientes</a
       >
     </nav>
