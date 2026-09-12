@@ -124,3 +124,14 @@ en el componente de booking necesitamos construir un crud para este objeto, solo
 }
 
 en el componente de customer necesitamos construir un crud para este objeto, solo modifica el html - el diseño apegate a lo que hemos manejado junto con su paleta de colores, ya esta creado el modelo con la estructura de customer, se llama customer.model.ts
+
+{
+  "totalCars": 12,
+  "totalCustomers": 20,
+  "totalBookings": 15,
+  "todaysBooking": 1,
+  "todayTotalAmount": 100,
+  "totalAmount": 34599809
+}
+
+genera en el componente de dashboard una vista interactiva con estadistacas para nuestro sistema, apegate a la paleta de colores que usamos
